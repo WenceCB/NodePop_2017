@@ -17,7 +17,7 @@ conn.once('open', () =>{
 
 // La cadena de conexión es como una URL pero con protocolo mongodb
 
-mongoose.connect('mongodb://localhost/prueba4');
+mongoose.connect('mongodb://localhost/nodepop');
 
 // exporto la conexión para poder usarla en el script de Inicio de base de datos
 

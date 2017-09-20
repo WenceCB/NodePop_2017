@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const conn = mongoose.connection;
-mongoose.connect('mongodb://localhost/prueba3');
+mongoose.connect('mongodb://localhost/nodepop');
 
 
 // Definir un esquema

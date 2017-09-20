@@ -3,40 +3,113 @@
 const express = require('express');
 const router = express.Router();
 
-// Exportamos de mongoose el modelo de anuncio
+// Forma 1 : Le pedimos a moongose que nos de el modelo de Agente
+// const mongoose = require('mongoose');
+// const Agente = moogoose.model('Agente');
 
+// Forma 2 exportamos
 const Anuncio = require('..//../models/Anuncio');
+
 
 // GET de mi API /
 
 router.get('/',(req,res,next)  => {
-    
-        const nombre = req.query.nombre;
-        
-    
-        // Paginar
-    
-        const skip = parseInt(req.query.skip);
-    
-        // Limitar
-    
-        const limit = parseInt(req.query.limit);
-        // Filtro
-    
-        const filter = {};
-    
-        if (nombre){
-            filter.nombre = nombre;
-        }
-        
-        // Recuperar una lista de anuncios
-        Anuncio.lista(filter, skip, limit).then(lista => {
-            res.json({succes: true, rows: lista});
-        }).catch( err => {
-                console.log('Error ',err);
-                next(err); // Para que retorne la página de error
-                return;        
-        });
-    });
 
-    module.exports = router;
+    const nombre = req.query.nombre;
+   
+
+    // Paginar
+
+    const skip = parseInt(req.query.skip);
+
+    // Limitar
+
+    const limit = parseInt(req.query.limit);
+    // Filtro
+
+    const filter = {};
+
+    if (nombre){
+        filter.nombre = nombre;
+    }
+    
+    // Recuperar una lista de agentes
+    Anuncio.lista(filter, skip, limit).then(lista => {
+        res.json({succes: true, rows: lista});
+    }).catch( err => {
+            console.log('Error ',err);
+            next(err); // Para que retorne la página de error
+            return;        
+    });
+});
+
+// GET /:id
+// Recuperar un solo documento
+
+router.get('/:id',(req,res,next)  => {
+    const _id = req.params.id;
+    // Recuperar una lista de agentes
+    Anuncio.findOne({_id:_id},(err, anuncio) => {
+        if(err){
+            console.log('Error ',err);
+            next(err); // Para que retorne la página de error
+            return;
+        }
+        res.json({succes: true, row: anuncio});
+    });
+});
+
+
+// POST /
+// Crear un agente
+
+router.post('/',(req,res, next) =>{
+    console.log(req.body);
+    // Creamos nuevo agente
+
+    const anuncio = new Anuncio(req.body);
+
+    // Lo guardamos en la base de datos
+
+    anuncio.save((err,anuncioGuardado) =>{
+        if(err){
+            console.log('Error ',err);
+            next(err); // Para que retorne la página de error
+            return;
+        }
+        res.json({succes: true, resultado: anuncioGuardado});
+    });   
+});
+
+// PUT /
+// Actualizar un anuncio
+
+router.put('/:claveAnuncio', (req,res,next) => {
+    const _id = req.params.claveAnuncio;
+    // Actualizo con {new: true} para que retorne el agenteActualizado y no el anterior
+    Anuncio.findOneAndUpdate({_id: _id}, req.body, {new: true},(err, anuncioActualizado) =>{
+        if(err){
+            console.log('Error ',err);
+            next(err); // Para que retorne la página de error
+            return;
+        }
+        res.json({succes: true, resultado: anuncioActualizado});
+    });
+});
+
+// DELETE /
+// Borrar un anuncio
+
+router.delete('/:id', (req,res,next) =>{
+    const _id = req.params.id;
+    Anuncio.remove({_id: _id}, (err)=>{
+        if(err){
+            console.log('Error ',err);
+            next(err); // Para que retorne la página de error
+            return;
+        }
+        res.json({succes: true, resultado: 'Se ha borrado'});
+    });
+})
+
+module.exports = router;
