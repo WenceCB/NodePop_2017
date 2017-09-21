@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><HOLA></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>HOLA</h1>
+    <p>Welcome to </p>
+    
+    
+   
+    
+      <% for(var i=0; i < lista.length; i++) { %>
+   
+     <p><%= lista[i].name %></p>
+     <img src="<%=ruta+lista[i].foto%>"></img>
+   
+<% } %>
+
+<input type="text" id="name">
+<button id="bfiltrar" onclick="filtrar()">Filtrar</button>
+
+<script>
+var a = document.getElementById('name');
+
+function filtrar(){
+   window.location.replace("./anuncios?name="+a.value);
+};
+</script>
+
+
+  </body>
+</html>
