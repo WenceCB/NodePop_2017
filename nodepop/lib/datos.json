@@ -5,7 +5,7 @@
         "name": "Bicicleta",
         "venta": "true",
         "precio": 230.15,
-        "foto": "wence.jpeg",
+        "foto": "bicicleta.jpg",
         "tags": ["lifestyle", "motor"]
     },
 
@@ -13,7 +13,7 @@
         "name": "Iphone 3GS",
         "venta": "false",
         "precio": 50.00,
-        "foto": "iphone.png",
+        "foto": "iphone.jpg",
         "tags": ["lifestyle", "mobile"]
     }
 

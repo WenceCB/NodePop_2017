@@ -42,7 +42,8 @@ router.get('/',(req,res,next)  => {
     }
     // Recuperar una lista de agentes
     Anuncio.lista(filter, skip, limit).then(lista => {
-        res.json({succes: true, rows: lista});
+        //res.json({succes: true, rows: lista});
+        res.render('index',{lista,ruta});
     }).catch( err => {
             console.log('Error ',err);
             next(err); // Para que retorne la página de error
