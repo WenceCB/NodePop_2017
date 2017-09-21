@@ -11,12 +11,16 @@ const router = express.Router();
 const Anuncio = require('..//../models/Anuncio');
 
 
+// Construcción de rutas para imágenes
+
+const ruta = '/images/anuncios/';
+
 // GET de mi API /
 
 router.get('/',(req,res,next)  => {
 
-    const nombre = req.query.nombre;
-   
+    const name = req.query.name;
+    const venta = req.query.venta;
 
     // Paginar
 
@@ -24,15 +28,18 @@ router.get('/',(req,res,next)  => {
 
     // Limitar
 
+    
     const limit = parseInt(req.query.limit);
     // Filtro
 
     const filter = {};
 
-    if (nombre){
-        filter.nombre = nombre;
+    if (name){
+        filter.name = name;
     }
-    
+    if (venta){
+        filter.venta = venta;
+    }
     // Recuperar una lista de agentes
     Anuncio.lista(filter, skip, limit).then(lista => {
         res.json({succes: true, rows: lista});

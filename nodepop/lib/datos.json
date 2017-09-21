@@ -2,15 +2,15 @@
     "anuncios":
 [
     {
-        "nombre": "Daddy",
+        "name": "Bicicleta",
         "venta": "true",
         "precio": 230.15,
-        "foto": "bici.jpg",
+        "foto": "wence.jpeg",
         "tags": ["lifestyle", "motor"]
     },
 
     {
-        "nombre": "yankeee 3GS",
+        "name": "Iphone 3GS",
         "venta": "false",
         "precio": 50.00,
         "foto": "iphone.png",

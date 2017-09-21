@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><HOLA></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1><HOLA></h1>
+    <p>Welcome to </p>
+    <p> vamos a poner algo de esto </p>
+    <img src="/images/anuncios/wence.jpeg"></img>
+     <img src="<%=ruta+lista[0].foto%>"></img>
+    
+    
+    <%= lista[0].nombre %>
+     <%= lista[1].nombre %>
+      <%= console.log('La ruta es ' +ruta+lista[0].foto) %>
+     <%lista.forEach(function(elemento){ %>
+      <p><% elemento.nombre;console.log('lista.nombre');  %></p>
+     <% }); %>
   </body>
 </html>

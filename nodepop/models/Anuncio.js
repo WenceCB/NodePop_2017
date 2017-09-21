@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Definir un esquema
 
 const anuncioSchema = mongoose.Schema({
-    nombre: String,
+    name: String,
     venta: Boolean,
     precio: Number,
     foto: String,
@@ -19,7 +19,7 @@ const anuncioSchema = mongoose.Schema({
 anuncioSchema.statics.lista = function (filter, skip, limit, callback){
    const query = Anuncio.find();
    query.skip(skip);
-   query.limit(limit);
+   query.limit(limit);   
    return query.exec(callback);
 };
 

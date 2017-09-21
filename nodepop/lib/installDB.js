@@ -1,5 +1,7 @@
 "use strict";
 
+console.log("HOoooooooooooooolaaaaaaaaaa");
+
 const mongoose = require('mongoose');
 const conn = mongoose.connection;
 mongoose.connect('mongodb://localhost/nodepop');
@@ -19,4 +21,6 @@ conn.once('open', async () =>{
   console.log('Eliminados', res.result.n, 'anuncios');
   const insertados = await Anuncio.insertMany(datos.anuncios);
   console.log(`Insertados ${insertados.length} anuncios`);
+ 
 });
+
