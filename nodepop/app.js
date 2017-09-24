@@ -23,9 +23,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/apiv1/tags', require('./routes/apiv1/tags'));
+
+
+app.get('/public/stylesheets/css/bootstrap.min.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '/public/stylesheets/css/', 'bootstrap.min.css'));
+});
+
+// Conexión a la base de datos
+
+require('./lib/connectMongoose');
+require('./models/Anuncio');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -34,41 +46,38 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// Conexión a la base de datos
-
-require('./lib/connectMongoose');
-require('./models/Anuncio');
 
 // error handler
 app.use(function(err, req, res, next) {
-
-  if (err.array) { // validation error
-    err.status = 422;
-    const errInfo = err.array({ onlyFirstError: true })[0];
-    err.message = isAPI(req) ?
-      { message: 'Not valid', errors: err.mapped()}
-      : `Not valid - ${errInfo.param} ${errInfo.msg}`;
+  
+    if (err.array) { // validation error
+      err.status = 422;
+      const errInfo = err.array({ onlyFirstError: true })[0];
+      err.message = isAPI(req) ?
+        { message: 'Not valid', errors: err.mapped()}
+        : `Not valid - ${errInfo.param} ${errInfo.msg}`;
+    }
+    res.status(err.status || 500);
+  
+    // Si es una petición al API respondo JSON
+    if (isAPI(req)){
+      res.json({success: false, error: err.message});
+      return;
+    }
+    //.. y si no respondo con HTML
+  
+  
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  
+    // render the error page
+    
+    res.render('error');
+  });
+  
+  function isAPI(req){
+    return req.originalUrl.indexOf('/api') === 0;
   }
-  res.status(err.status || 500);
-
-  // Si es una petición al API respondo JSON
-  if (isAPI(req)){
-    res.json({success: false, error: err.message});
-    return;
-  }
-  //.. y si no respondo con HTML
-
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-function isAPI(req){
-  return req.originalUrl.indexOf('/api') === 0;
-}
-
-module.exports = app;
+  
+  module.exports = app;

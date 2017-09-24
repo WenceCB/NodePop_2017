@@ -19,30 +19,55 @@ const ruta = '/images/anuncios/';
 
 router.get('/',(req,res,next)  => {
 
-    const name = req.query.name;
+    const nombre = req.query.nombre;
     const venta = req.query.venta;
+    const tags = req.query.tags;
+    const precio = req.query.precio;
+
 
     // Paginar
 
     const skip = parseInt(req.query.skip);
 
     // Limitar
-
     
     const limit = parseInt(req.query.limit);
+
     // Filtro
 
     const filter = {};
 
-    if (name){
-        filter.name = name;
+    if (nombre){
+        filter.nombre = new RegExp('^' +   req.query.nombre,   "i");;
     }
     if (venta){
         filter.venta = venta;
     }
-    // Recuperar una lista de agentes
+    if (tags){
+        filter.tags = tags;
+        console.log('Hay tag',tags);
+    }
+    if (typeof req.query.precio !== 'undefined' && req.query.precio !== '-') {
+        if (req.query.precio.indexOf('-') !== -1) {
+          filter.precio = {};
+          let rango = req.query.precio.split('-');
+          if (rango[0] !== '') {
+            filter.precio.$gte = rango[0];
+          }
+    
+          if (rango[1] !== '') {
+            filter.precio.$lte = rango[1];
+          }
+        } else {
+          filter.precio = req.query.precio;
+        }
+      }
+    // Recuperar una lista de Anuncios
+
     Anuncio.lista(filter, skip, limit).then(lista => {
         //res.json({succes: true, rows: lista});
+        console.log('en filtro hay',filter);
+        console.log('En el controlador hay',lista.length);
         res.render('anuncios',{lista,ruta});
     }).catch( err => {
             console.log('Error ',err);
@@ -51,29 +76,13 @@ router.get('/',(req,res,next)  => {
     });
 });
 
-// GET /:id
-// Recuperar un solo documento
-
-router.get('/:id',(req,res,next)  => {
-    const _id = req.params.id;
-    // Recuperar una lista de agentes
-    Anuncio.findOne({_id:_id},(err, anuncio) => {
-        if(err){
-            console.log('Error ',err);
-            next(err); // Para que retorne la página de error
-            return;
-        }
-        res.json({succes: true, row: anuncio});
-    });
-});
-
 
 // POST /
-// Crear un agente
+// Crear un anuncio
 
 router.post('/',(req,res, next) =>{
     console.log(req.body);
-    // Creamos nuevo agente
+    // Creamos nuevo Anuncio
 
     const anuncio = new Anuncio(req.body);
 
@@ -88,36 +97,5 @@ router.post('/',(req,res, next) =>{
         res.json({succes: true, resultado: anuncioGuardado});
     });   
 });
-
-// PUT /
-// Actualizar un anuncio
-
-router.put('/:claveAnuncio', (req,res,next) => {
-    const _id = req.params.claveAnuncio;
-    // Actualizo con {new: true} para que retorne el agenteActualizado y no el anterior
-    Anuncio.findOneAndUpdate({_id: _id}, req.body, {new: true},(err, anuncioActualizado) =>{
-        if(err){
-            console.log('Error ',err);
-            next(err); // Para que retorne la página de error
-            return;
-        }
-        res.json({succes: true, resultado: anuncioActualizado});
-    });
-});
-
-// DELETE /
-// Borrar un anuncio
-
-router.delete('/:id', (req,res,next) =>{
-    const _id = req.params.id;
-    Anuncio.remove({_id: _id}, (err)=>{
-        if(err){
-            console.log('Error ',err);
-            next(err); // Para que retorne la página de error
-            return;
-        }
-        res.json({succes: true, resultado: 'Se ha borrado'});
-    });
-})
 
 module.exports = router;

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Definir un esquema
 
 const anuncioSchema = mongoose.Schema({
-    name: String,
+    nombre: String,
     venta: Boolean,
     precio: Number,
     foto: String,
@@ -14,15 +14,21 @@ const anuncioSchema = mongoose.Schema({
 
 
 
-// Añadimos método estático
+// Añadimos método estático para buscar por filtro, paginación y límite
 
 anuncioSchema.statics.lista = function (filter, skip, limit, callback){
-   const query = Anuncio.find(filter);
-   console.log(filter);
+   const query = Anuncio.find(filter);  
    query.skip(skip);
-   query.limit(limit);   
-   return query.exec(callback);
+   query.limit(limit);        
+   return query.exec(callback);   
 };
+
+// Añadimos método estático para buscar tags
+
+anuncioSchema.statics.lista_tags = function (filter,callback){
+    const query = Anuncio.distinct(filter);        
+    return query.exec(callback);   
+ };
 
 // Crear el modelo
 

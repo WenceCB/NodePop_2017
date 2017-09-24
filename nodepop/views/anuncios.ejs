@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><HOLA></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>HOLA</h1>
-    <p>Welcome to </p>
-    
+<%include header%>
     
    
     
-      <% for(var i=0; i < lista.length; i++) { %>
+      <% for(var i=0; i < lista.length; i++) { 
+        console.log('En lista hay',lista.length,'elementos');
+        %>
    
-     <p><%= lista[i].name %></p>
+     <p><%= lista[i].nombre %></p>
      <img src="<%=ruta+lista[i].foto%>"></img>
    
 <% } %>
@@ -29,6 +22,4 @@ function filtrar(){
 };
 </script>
 
-
-  </body>
-</html>
+<%include footer%>

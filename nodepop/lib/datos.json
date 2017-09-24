@@ -2,7 +2,7 @@
     "anuncios":
 [
     {
-        "name": "Bicicleta",
+        "nombre": "Bicicleta",
         "venta": "true",
         "precio": 230.15,
         "foto": "bicicleta.jpeg",
@@ -10,7 +10,7 @@
     },
 
     {
-        "name": "Iphone 3GS",
+        "nombre": "Iphone 3GS",
         "venta": "false",
         "precio": 50.00,
         "foto": "iphone.jpeg",
