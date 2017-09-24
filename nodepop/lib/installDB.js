@@ -1,6 +1,5 @@
 "use strict";
 
-console.log("HOoooooooooooooolaaaaaaaaaa");
 
 const mongoose = require('mongoose');
 const conn = mongoose.connection;

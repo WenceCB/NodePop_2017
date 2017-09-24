@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+
 
 var app = express();
 
@@ -23,11 +23,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Defino donde tengo mis vistas cuando son llamadas
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 app.use('/apiv1/tags', require('./routes/apiv1/tags'));
+app.use('/apiv1/filtrar', require('./routes/apiv1/filtrar'));
+app.use('/apiv1/crear', require('./routes/apiv1/crear'));
 
 
 app.get('/public/stylesheets/css/bootstrap.min.css', function (req, res) {
@@ -59,11 +61,8 @@ app.use(function(err, req, res, next) {
     }
     res.status(err.status || 500);
   
-    // Si es una petición al API respondo JSON
-    if (isAPI(req)){
-      res.json({success: false, error: err.message});
-      return;
-    }
+    
+   
     //.. y si no respondo con HTML
   
   
@@ -76,8 +75,6 @@ app.use(function(err, req, res, next) {
     res.render('error');
   });
   
-  function isAPI(req){
-    return req.originalUrl.indexOf('/api') === 0;
-  }
+ 
   
   module.exports = app;
