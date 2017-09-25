@@ -3,11 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-// Forma 1 : Le pedimos a moongose que nos de el modelo de Agente
-// const mongoose = require('mongoose');
-// const Agente = moogoose.model('Agente');
+// Le pedimos a moongose que nos de el modelo de Anuncio
 
-// Forma 2 exportamos
 const Anuncio = require('..//../models/Anuncio');
 
 
@@ -64,9 +61,10 @@ router.get('/',(req,res,next)  => {
         // Recuperar una lista de Anuncios
     
         Anuncio.lista(filter, skip, limit).then(lista => {
-            //res.json({succes: true, rows: lista});
-            console.log('en filtro hay',filter);
-            console.log('En el controlador hay',lista.length);
+
+            // Si se quiere mostrar en JSON descomentar res.json y comentar res.render
+
+            //res.json({succes: true, rows: lista});           
             res.render('anuncios',{lista,ruta});
         }).catch( err => {
                 console.log('Error ',err);
@@ -81,6 +79,7 @@ router.get('/',(req,res,next)  => {
 
 router.post('/',(req,res, next) =>{
     console.log(req.body);
+
     // Creamos nuevo Anuncio
 
     const anuncio = new Anuncio(req.body);
@@ -93,7 +92,10 @@ router.post('/',(req,res, next) =>{
             next(err); // Para que retorne la página de error
             return;
         }
-        res.json({succes: true, resultado: anuncioGuardado});
+        // Si se quiere mostrar en JSON descomentar res.json y comentar res.render
+
+        //res.json({succes: true, resultado: anuncioGuardado});
+        res.render('anuncioGuardado',{anuncioGuardado,ruta});
     });   
 });
 
