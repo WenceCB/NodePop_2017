@@ -12,7 +12,7 @@ Dependencias del proyecto
 >npm install
 
 ## Estructura de carpetas
-### /lib
+### lib
 
 
 ***connectMongoose.js***
@@ -27,7 +27,7 @@ Dependencias del proyecto
 
 > Script que conecta a la BD, elimina las tablas existentes y vuelve a crear los dos anuncios del jSON dado.
  
-### /models
+### models
 
 
 ***Anuncio.js***
@@ -42,7 +42,7 @@ Dependencias del proyecto
 >> 
 >> Para obtener el listado de los tags en todos los anuncios
 
-### /public
+### public
 
 Archivos estáticos, importante definir en el app.js
 
