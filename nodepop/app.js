@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
         { message: 'Not valid', errors: err.mapped()}
         : `Not valid - ${errInfo.param} ${errInfo.msg}`;
     }
-    res.status(err.status || 500);
+    res.status(err.status = 500);
   
     
    
