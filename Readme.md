@@ -27,7 +27,7 @@ Dependencias del proyecto
 
 > Script que conecta a la BD, elimina las tablas existentes y vuelve a crear los dos anuncios del jSON dado.
  
-### models
+### /models
 
 
 ***Anuncio.js***
@@ -42,15 +42,16 @@ Dependencias del proyecto
 >> 
 >> Para obtener el listado de los tags en todos los anuncios
 
-### public
+### /public
 
 Archivos estáticos, importante definir en el app.js
 
 >app.use(express.static(path.join(__dirname, 'public')));
 
 
-##ROUTES
-###apiv1
+## ROUTES
+
+### /apiv1
 En esta carpeta se encuentran los archivos que son llamados a través de peticiones y su comportamiento
 
 ***anuncios.js***
@@ -70,11 +71,11 @@ En esta carpeta se encuentran los archivos que son llamados a través de peticio
 > Se importa el modelo de Anuncio y se hace la llamada al método estático lista_tags.js
 > Manda variable a la vista
 
-###index.js
+### index.js
 
 > Atiende la petición a la ruta y la muestra al usuario
 
-##Views
+## Views
 
 ***anuncioGuardado.ejs***
 > Con la variable recibida del controlador, muestro los campos al usuario formateados.
@@ -105,7 +106,7 @@ En esta carpeta se encuentran los archivos que son llamados a través de peticio
 > Recorro la variable recibida y muestro los campos de la misma, a  través de un bucle for y con los datos formateados.
 
 
-##app.js
+## app.js
 
 - Se definen las vistas a través de quién las llama.
 - Establezco la ubicación para servir los ficheros estáticos.
