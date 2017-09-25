@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
- // Le pedimos a moongose que nos de el modelo de Agente
+ // Le pedimos a moongose que nos de el modelo de Anuncio
 
 const Anuncio = require('..//../models/Anuncio');
 
@@ -17,7 +17,10 @@ router.get('/',(req,res,next)  => {
     
     // Mostrar la lista de tags existentes
 
-    Anuncio.lista_tags(filter).then(lista => {       
+    Anuncio.lista_tags(filter).then(lista => {   
+        
+        // Si se quiere mostrar en JSON descomentar res.json y comentar res.render
+        
         //res.json({succes: true, rows: lista});       
         res.render('tags',{lista});
     }).catch( err => {
